@@ -1,9 +1,12 @@
 import React from 'react';
 import {Text, TextInput, View} from 'react-native';
 
-function CommonTextInputWithTopText({title, keyboardType = 'default'}) {
-  const [data, onChangeData] = React.useState('');
-
+function CommonTextInputWithTopText({
+  title,
+  keyboardType = 'default',
+  onChangeData,
+  data,
+}) {
   return (
     <View>
       <Text
@@ -22,7 +25,8 @@ function CommonTextInputWithTopText({title, keyboardType = 'default'}) {
       <TextInput
         onChangeText={onChangeData}
         value={data}
-        maxLength={20}
+        secureTextEntry={true}
+        maxLength={40}
         numberOfLines={1}
         style={{
           borderRadius: 5,
@@ -31,6 +35,7 @@ function CommonTextInputWithTopText({title, keyboardType = 'default'}) {
           marginTop: 10,
           marginHorizontal: 10,
           paddingHorizontal: 10,
+          color: 'black',
         }}
         placeholder={title}
         placeholderTextColor="black"

@@ -1,14 +1,12 @@
-import React from 'react';
-import {
-  Alert,
-  Text,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Button, Text, View} from 'react-native';
 import CommonTextInputWithTopText from '../components/CommonTextInputWithTopText.js';
 import CommonButton from '../components/CommonButton.js';
 import CommonImage from '../components/CommonImage.js';
 
-function LoginScreen() {
+const LoginScreen = (props) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <View
       style={{
@@ -18,7 +16,7 @@ function LoginScreen() {
         justifyContent: 'center', // Centers the content vertically
         alignContent: 'center',
       }}>
-      <CommonImage height={100} width={100}></CommonImage>
+      <CommonImage path={require('../assets/knife.png')} height={100} width={100}></CommonImage>
 
       <Text
         style={{
@@ -33,17 +31,28 @@ function LoginScreen() {
       </Text>
 
       <CommonTextInputWithTopText
-        title={'Enter username'}></CommonTextInputWithTopText>
+        title={'Enter username'}
+        keyboardType="default">
+        onChangeData =
+        {value => {
+          setUsername(value);
+        }}
+        data = {username}
+      </CommonTextInputWithTopText>
 
       <CommonTextInputWithTopText
         title={'Enter password'}
-        keyboardType="default"></CommonTextInputWithTopText>
+        keyboardType="default"
+        onChangeData={value => {
+          setPassword(value);
+        }}
+        data={password}></CommonTextInputWithTopText>
 
       <CommonButton
         title={'LOGIN'}
-        onButtonPress={() => Alert.alert('Button Pressed')}></CommonButton>
+        onButtonPress={()=> props.navigation.navigate('Home')}></CommonButton>
     </View>
   );
-}
+};
 
 export default LoginScreen;
