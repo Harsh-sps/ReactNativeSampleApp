@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
+import {fetchPhotos} from '../utils/api';
 
 const PhotosData = [
   {
@@ -100,48 +101,65 @@ const Item = ({imageUrl, onPress, itemStyle}) => {
 };
 
 const HorizontalList = ({data, navigation}) => {
-
-  return(<View style={styles.topContainer}>
-    <FlatList
-      horizontal
-      data={data}
-      renderItem={({item}) => (
-        <Item
-          imageUrl={item.imageUrl}
-          onPress={() => {
-            navigation.navigate('Detail', {item});
-          }}
-          itemStyle={styles.horizontalItem}></Item>
-      )}
-      keyExtractor={item => item.id}></FlatList>
-  </View>)
-  
+  return (
+    <View style={styles.topContainer}>
+      <FlatList
+        horizontal
+        data={data}
+        renderItem={({item}) => (
+          <Item
+            imageUrl={item.imageUrl}
+            onPress={() => {
+              navigation.navigate('Detail', {item});
+            }}
+            itemStyle={styles.horizontalItem}></Item>
+        )}
+        keyExtractor={item => item.id}></FlatList>
+    </View>
+  );
 };
 
 const VerticalList = ({data, navigation}) => {
- return( <View style={styles.bottomContainer}>
-  <FlatList
-    data={data}
-    renderItem={({item}) => (
-      <Item
-        imageUrl={item.imageUrl}
-        onPress={() => {
-          navigation.navigate('Detail', {item});
-        }}
-        itemStyle={styles.verticalItem}></Item>
-    )}
-    keyExtractor={item => item.id}></FlatList>
-</View>)
+  return (
+    <View style={styles.bottomContainer}>
+      <FlatList
+        data={data}
+        renderItem={({item}) => (
+          <Item
+            imageUrl={item.imageUrl}
+            onPress={() => {
+              navigation.navigate('Detail', {item});
+            }}
+            itemStyle={styles.verticalItem}></Item>
+        )}
+        keyExtractor={item => item.id}></FlatList>
+    </View>
+  );
+};
+
+const fetchData = async () => {
+  try {
+    const data = await fetchPhotos();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const HomeScreen = ({navigation}) => {
+  useEffect(() => {
+    fetchData()
+  });
+  
   return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <Text style={styles.title}>Horizontal Items</Text>
-        <HorizontalList data={PhotosData} navigation={navigation}></HorizontalList>
-        <Text style={styles.title}>Vertical Items</Text>
-        <VerticalList data={PhotosData} navigation={navigation}></VerticalList>
-      </View>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
+      <Text style={styles.title}>Horizontal Items</Text>
+      <HorizontalList
+        data={PhotosData}
+        navigation={navigation}></HorizontalList>
+      <Text style={styles.title}>Vertical Items</Text>
+      <VerticalList data={PhotosData} navigation={navigation}></VerticalList>
+    </View>
   );
 };
 

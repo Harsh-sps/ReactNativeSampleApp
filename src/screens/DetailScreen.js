@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, Image, Text, View} from 'react-native';
+import {ActivityIndicator, Image, View} from 'react-native';
 
 const DetailScreen = ({navigation, route}) => {
   const item = route.params.item;
