@@ -8,7 +8,7 @@ function CommonButton({title, onButtonPress, buttonStyle, buttonTextStyle}) {
       activeOpacity={0.8}
       onPress={onButtonPress}>
       <Text style={buttonTextStyle}>{title}</Text>
-    </TouchableOpacity>
+    </TouchableOpacity>   
   );
 }
 

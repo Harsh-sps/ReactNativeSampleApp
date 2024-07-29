@@ -12,7 +12,7 @@ const DetailScreen = ({navigation, route}) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}> 
           <ActivityIndicator size="large" color="black" />
         </View>
       )}

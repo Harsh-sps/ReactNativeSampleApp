@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, View, ActivityIndicator} from 'react-native';
+import {Image, StyleSheet, View, ActivityIndicator, Text} from 'react-native';
 import {fetchPhotoBasedOnId} from '../utils/api';
 
 const PhotosDetailScreen = ({navigation, route}) => {
@@ -27,29 +27,33 @@ const PhotosDetailScreen = ({navigation, route}) => {
 
   if (loading || !response) {
     return (
-      <View style={styles.parentContainer}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ActivityIndicator size="large" color="black" />
-        </View>
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }
 
   return (
-    <View>
+    <View style={styles.contentContainer}>
       <Image
         source={{uri: response.urls.small}}
         style={styles.topContainer}></Image>
+
+      <Text style= {styles.descriptionStyle}>
+        {response.alt_description}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  parentContainer: {
+  loaderContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentContainer: {
     flex: 1,
     backgroundColor: 'white',
   },
@@ -61,6 +65,12 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 0.5,
   },
+  descriptionStyle: {
+    fontSize: 16,
+    color: 'black',
+    fontWeight: '600',
+    marginHorizontal: 10
+  }
 });
 
 export default PhotosDetailScreen;
